@@ -1,16 +1,21 @@
 package main
 
-import(
-"testing"
+import (
+	"fmt"
+	"testing"
 )
 
-func Testlottonumber(t *testing.T){
-	x := lottonumber(1)
-	for i, v := range x{
-		if (v[i] > 49 == true) {
-			t.Error("expected", "[0-49]", "got", "[50--]")
+func TestLottonumber(t *testing.T) {
+
+	x := lotonumber(143000)
+	c := 0
+	for _, v := range x {
+		for _, w := range v {
+			c++
+			if (w > 48) || (w < 0) || (len(v) != 7) {
+				t.Error("Error")
+			}
 		}
-
 	}
-
+	fmt.Println(c)
 }
