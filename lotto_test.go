@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"testing"
-    "math"
-    "gonum.org/v1/gonum/stat/distuv"
+        "math"
+        "gonum.org/v1/gonum/stat/distuv"
 )
 
 
