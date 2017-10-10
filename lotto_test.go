@@ -15,7 +15,8 @@ func within(a, b, maxDiff float64) bool {
 }
 
 func TestLottonumber(t *testing.T) {
-	x := lotonumber(10)
+	n := 10
+	x := lotonumber(n)
 	total := 0
 	c := 0
 	for _, v := range x {
