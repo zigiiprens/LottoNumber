@@ -2,33 +2,36 @@ package main
 
 import (
 	"fmt"
-	"math"
 	"testing"
-	//"github.com/gonum/stat"
-	//"github.com/gonum/stat/distuv"
+    "math"
+    "gonum.org/v1/gonum/stat/distuv"
 )
 
+
+
+func within(a, b, maxDiff float64) bool {
+	absDiff := math.Abs(a - b)
+	return absDiff < maxDiff
+}
+
 func TestLottonumber(t *testing.T) {
-	n := 100000
-	x := lotonumber(n)
-	var sum, kare, ort int
-	var sapma float64
+	x := lotonumber(10)
+	total := 0
 	c := 0
 	for _, v := range x {
-		for _, w := range v {
-			sum = sum + w
-			kare = kare + (w ^ 2)
-
-			c++
-			if (w > 48) || (w < 0) || (len(v) != 7) {
-				t.Error("Error")
-			}
-
-		}
-
+		for _, w := range v { 
+			total++                   
+			if (w > 48) {t.Error("Error with number better than 48")}
+			if (w < 0) {t.Error("Error with number less than 0")}
+			if (len(v)!=7) {t.Error("Error with lotto number lenght")}
+            if (within(float64(c),float64(w),0.02) == true) {t.Error("Error with maxDifference")}
+            c = w
+		}		
 	}
-	ort = ((sum / (n * 7)) ^ 2) * (n * 7)
-	sapma = math.Sqrt(math.Abs(float64(((kare - ort) / (n * 7)))))
-	fmt.Println("Standart Devition is:", sapma)
-	fmt.Println("Numbers of random numbers:", c)
+	s := distuv.Uniform{Min : 0, Max : 49}
+    std := s.StdDev()
+    skn := s.Skewness()
+	kurt := s.ExKurtosis()
+	fmt.Println(std, skn, kurt)
+	fmt.Println("Total Numbers generated is %d",total)
 }
