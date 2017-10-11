@@ -17,7 +17,7 @@ func TestLottonumber(t *testing.T) {
 
 	s := distuv.Uniform{Min: 0, Max: 49}
 	n := 100
-	x := lotonumber(n)
+	x := lottonumber(n)
 	total := 0
 	total1 := 0
 	total2 := 0
