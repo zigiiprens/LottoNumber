@@ -16,15 +16,13 @@ func within(a, b, maxDiff float64) bool {
 func TestLottonumber(t *testing.T) {
 
 	s := distuv.Uniform{Min: 0, Max: 49}
-	n := 100
+	maxDiff := 0.2
+	n := 100000
 	x := lottonumber(n)
 	total := 0
 	total1 := 0
 	total2 := 0
 	total3 := 0
-	total4 := 0
-	c := 0
-	//data := make([]float64, 70)
 	var data []float64
 
 	for _, v := range x {
@@ -34,9 +32,7 @@ func TestLottonumber(t *testing.T) {
 			total1++
 			total2++
 			total3++
-			total4++
 			if w > 48 {
-
 				t.Error("Error with number better than 48")
 				total1--
 			}
@@ -48,23 +44,19 @@ func TestLottonumber(t *testing.T) {
 				t.Error("Error with lotto number lenght")
 				total3--
 			}
-			if within(float64(c), float64(w), 1) == true {
-				//t.Error("2 generated consecutives numbers are same")
-				total4--
-			}
-			c = w
 		}
 	}
 	_, stdd := stat.MeanStdDev(data, nil)
 	sknn := stat.Skew(data, nil)
 	kurtt := stat.ExKurtosis(data, nil)
-	fmt.Println("StdDev, Skewness, ExKurt calculated stat/", stdd, sknn, kurtt)
-
 	std := s.StdDev()
 	skn := s.Skewness()
 	kurt := s.ExKurtosis()
+
+	fmt.Println("StdDev, Skewness, ExKurt calculated stat/", stdd, sknn, kurtt)
 	fmt.Println("StdDev, Skewness, ExKurt from disturv/uniform", std, skn, kurt)
-	fmt.Println(total, total1, total2, total2, total3, total4)
-	fmt.Println("Number of consecutives randomized number", total-total4)
-	fmt.Println(data)
+	fmt.Println(total, total1, total2, total2, total3)
+	fmt.Println("The difference between the standart deviations are lower than",maxDiff, within(stdd,std,maxDiff))
+	fmt.Println("The difference between the Skewnesses are lower than",maxDiff, within(sknn,skn,maxDiff))
+	fmt.Println("The difference between the ExKurtosises are lower than",maxDiff, within(kurtt,kurt,maxDiff))
 }
