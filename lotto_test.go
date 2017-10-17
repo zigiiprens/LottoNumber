@@ -24,16 +24,17 @@ func TestLottonumber(t *testing.T) {
 	total3 := 0
 	total4 := 0
 	c := 0
-	data := make([]float64, 1e5)
+	//data := make([]float64, 70)
+	var data []float64
 
 	for _, v := range x {
-		for i, w := range v {
+		for _, w := range v {
+			data = append(data, float64(w))
 			total++
 			total1++
 			total2++
 			total3++
 			total4++
-			data[i] = float64(w)
 			if w > 48 {
 
 				t.Error("Error with number better than 48")
@@ -47,8 +48,8 @@ func TestLottonumber(t *testing.T) {
 				t.Error("Error with lotto number lenght")
 				total3--
 			}
-			if within(float64(c), float64(w), 0.02) == true {
-				t.Error("Error with maxDifference")
+			if within(float64(c), float64(w), 1) == true {
+				//t.Error("2 generated consecutives numbers are same")
 				total4--
 			}
 			c = w
@@ -64,4 +65,6 @@ func TestLottonumber(t *testing.T) {
 	kurt := s.ExKurtosis()
 	fmt.Println("StdDev, Skewness, ExKurt from disturv/uniform", std, skn, kurt)
 	fmt.Println(total, total1, total2, total2, total3, total4)
+	fmt.Println("Number of consecutives randomized number", total-total4)
+	fmt.Println(data)
 }
