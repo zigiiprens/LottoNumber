@@ -1,11 +1,11 @@
 package main
 
 import (
-	"fmt"
-	"gonum.org/v1/gonum/stat"
-	"gonum.org/v1/gonum/stat/distuv"
 	"math"
 	"testing"
+
+	"gonum.org/v1/gonum/stat"
+	"gonum.org/v1/gonum/stat/distuv"
 )
 
 func within(a, b, maxDiff float64) bool {
@@ -53,10 +53,13 @@ func TestLottonumber(t *testing.T) {
 	skn := s.Skewness()
 	kurt := s.ExKurtosis()
 
-	fmt.Println("StdDev, Skewness, ExKurt calculated stat/", stdd, sknn, kurtt)
-	fmt.Println("StdDev, Skewness, ExKurt from disturv/uniform", std, skn, kurt)
-	fmt.Println(total, total1, total2, total2, total3)
-	fmt.Println("The difference between the standart deviations are lower than",maxDiff, within(stdd,std,maxDiff))
-	fmt.Println("The difference between the Skewnesses are lower than",maxDiff, within(sknn,skn,maxDiff))
-	fmt.Println("The difference between the ExKurtosises are lower than",maxDiff, within(kurtt,kurt,maxDiff))
+	if !within(stdd, std, maxDiff) {
+		t.Error("Error with standart deviations difference", stdd)
+	}
+	if !within(sknn, skn, maxDiff) {
+		t.Error("Error with Skewnesses difference", sknn)
+	}
+	if !within(kurtt, kurt, maxDiff) {
+		t.Error("Error with ExKurtosises difference", kurtt)
+	}
 }
