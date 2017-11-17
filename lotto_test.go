@@ -63,3 +63,9 @@ func TestLottonumber(t *testing.T) {
 		t.Error("Error with ExKurtosises difference", kurtt)
 	}
 }
+
+func BenchmarkLottonumber(b *testing.B){
+	for n:=0; n < b.N; n++{
+		lottonumber(10)
+	}
+}
