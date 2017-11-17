@@ -66,6 +66,6 @@ func TestLottonumber(t *testing.T) {
 
 func BenchmarkLottonumber(b *testing.B){
 	for n:=0; n < b.N; n++{
-		lottonumber(10)
+		lottonumber(100000)
 	}
 }
